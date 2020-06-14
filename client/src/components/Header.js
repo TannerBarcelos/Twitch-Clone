@@ -9,7 +9,7 @@ import {Link} from 'react-router-dom';
 
 function Header () {
   return (
-    <div className="ui secondary pointing menu">
+    <div style={{paddingTop: '10px'}} className="ui secondary pointing menu">
       {/*link Home tab to / (the home page) always use <Link> when linking to different pages in an app with react. it is the design pattern*/}
       <Link to="/" className="item">
         Home
