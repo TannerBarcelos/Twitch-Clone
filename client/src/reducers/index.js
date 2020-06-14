@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-
+import {reducer as formReducer} from 'redux-form';
 //reducer imports for store
 import authReducer from './authReducer';
 
@@ -9,4 +9,10 @@ import authReducer from './authReducer';
 //IN ANY COMPONENT, TO OUR STORE [WHICH IS ALL COMBINED WITH COMBINE REDUCER HERE BUT GETS SHOVED TO ALL REDUCERS]
 export default combineReducers ({
   auth: authReducer,
+  form: formReducer,
 });
+
+/**
+ * redux form reducer is created for us when installing and using redux-form. super cool
+  the key name mUST be called form, though. must import the named export by the exact name as reducer [we can alias it with 'as' and some shorthand name]
+ */
