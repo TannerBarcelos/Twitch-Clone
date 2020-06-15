@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Field, reduxForm} from 'redux-form'; //capital imports here are to be components in react
+import {Field, reduxForm} from 'redux-form'; //capital imports here are to be components in react [reducForm is a method like connect() literally that will 'map' form state to this component to control it]
 
 class StreamCreate extends Component {
   /**
@@ -33,7 +33,7 @@ class StreamCreate extends Component {
     //takes the whole set of form props [destrucutred as input] key/vals and put them all as attributes for the input
     //in redux devtools we see that all the callback control stuff we've learned before is actually ahdnled for us!
     //we only need to make sure we wire up everything back to the dom element
-    const className = `field ${meta.error && meta.touched ? 'error' : ''}`; //defines the sematic ui classname for the input field: if no error just render 'field' for ui else, error
+    const className = `field ${meta.error && meta.touched ? 'error' : ''}`; //defines the sematic ui classname for the input field: if no error just render 'field' for ui else, error REMEMBER: you can do logic inside both {} in JSX and ALSO string interpolation
     return (
       <div className={className}>
         <label>{label}</label>
@@ -46,7 +46,9 @@ class StreamCreate extends Component {
   //handleSubmit will call this method and instead, pass this method the form inputs from the form and we can then
   //do whatever we want! super cool
   onSubmit (formValues) {
-    console.log (formValues);
+    //form submitted: we have gotten the form values [given to us by handleSubmit() <-redux-form method that handles the internal state of input
+    // and controlling form] and its passed the insubmit method to get all the data: since we have the form data, we can send this data to our server and
+    //do backend logic to build a stream and save that information [see video 244]
   }
 
   render () {
@@ -75,7 +77,7 @@ class StreamCreate extends Component {
 
 //validation step: receives the form values from the redux-form object magically [this is a funky, magical like function]
 const validate = formValues => {
-  const errors = {};
+  const errors = {}; //must have an object of errors
 
   //the mandatory name=title and name=description are the reference names of the objext redux-form makes
 
@@ -93,7 +95,7 @@ const validate = formValues => {
 };
 
 export default reduxForm ({
-  form: 'streamCreate',
+  form: 'streamCreate', //key here has to be named form because it referenccces the key 'form' in combine reducers when setting up the redux-form for this app
   validate: validate, //as we know, if key/val are same name, we can negate the val, and the key will just know what to refrence [must match some data, fucntion etc. it references in the file though]
 }) (StreamCreate);
 

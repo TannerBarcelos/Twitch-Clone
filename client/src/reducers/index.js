@@ -9,7 +9,7 @@ import authReducer from './authReducer';
 //IN ANY COMPONENT, TO OUR STORE [WHICH IS ALL COMBINED WITH COMBINE REDUCER HERE BUT GETS SHOVED TO ALL REDUCERS]
 export default combineReducers ({
   auth: authReducer,
-  form: formReducer,
+  form: formReducer, //redux form is a reducer itself: it does all the work so we just pass a reference to it from the import and have to name it form (go to StreamCreate to see why -> we need to 'map' the form data to the component with the form)
 });
 
 /**

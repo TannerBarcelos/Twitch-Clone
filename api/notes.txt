@@ -1,0 +1,1 @@
+db.json server as databse for this app but we could refactor to use mongoDB.

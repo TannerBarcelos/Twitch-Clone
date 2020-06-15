@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 import {createStore, applyMiddleware, compose} from 'redux';
-//import {thunk} from 'redux-thunk';
 
 //import App
 import App from './components/App';
@@ -22,7 +21,3 @@ ReactDOM.render (
   </Provider>,
   document.getElementById ('root')
 );
-
-/**
- * clientID: 106342742873-ntgcr1aoiros0i86ddb7uk5cvn5t1fi2.apps.googleusercontent.com
- */
