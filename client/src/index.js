@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 import {createStore, applyMiddleware, compose} from 'redux';
+import reduxThunk from 'redux-thunk';
 
 //import App
 import App from './components/App';
@@ -11,7 +12,10 @@ import reducers from './reducers'; //the index.js in reducers which combines all
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 //create reduxstore with our reducers [combined reducers]
-const store = createStore (reducers, composeEnhancers (applyMiddleware ()));
+const store = createStore (
+  reducers,
+  composeEnhancers (applyMiddleware (reduxThunk))
+);
 
 //attach the react in a whole to the html
 ReactDOM.render (

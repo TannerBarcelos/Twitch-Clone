@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {Field, reduxForm} from 'redux-form'; //capital imports here are to be components in react [reducForm is a method like connect() literally that will 'map' form state to this component to control it]
+import {connect} from 'react-redux'; //needed to map state as props from the store as we know [we already use reduxForm which does kinda the same thing for form state... see how we go about this below :)]
+import {createStream} from '../../actions'; //create stream action creator
 
 class StreamCreate extends Component {
   /**
@@ -33,9 +35,9 @@ class StreamCreate extends Component {
     //takes the whole set of form props [destrucutred as input] key/vals and put them all as attributes for the input
     //in redux devtools we see that all the callback control stuff we've learned before is actually ahdnled for us!
     //we only need to make sure we wire up everything back to the dom element
-    const className = `field ${meta.error && meta.touched ? 'error' : ''}`; //defines the sematic ui classname for the input field: if no error just render 'field' for ui else, error REMEMBER: you can do logic inside both {} in JSX and ALSO string interpolation
+    const fieldStyle = `field ${meta.error && meta.touched ? 'error' : ''}`; //defines the sematic ui classname for the input field: if no error just render 'field' for ui else, error REMEMBER: you can do logic inside both {} in JSX and ALSO string interpolation
     return (
-      <div className={className}>
+      <div className={fieldStyle}>
         <label>{label}</label>
         <input {...input} autoComplete="OFF" />
         {this.renderError (meta)}
@@ -45,17 +47,22 @@ class StreamCreate extends Component {
 
   //handleSubmit will call this method and instead, pass this method the form inputs from the form and we can then
   //do whatever we want! super cool
-  onSubmit (formValues) {
+  onSubmit = formValues => {
     //form submitted: we have gotten the form values [given to us by handleSubmit() <-redux-form method that handles the internal state of input
     // and controlling form] and its passed the insubmit method to get all the data: since we have the form data, we can send this data to our server and
     //do backend logic to build a stream and save that information [see video 244]
-  }
+
+    this.props.createStream (formValues);
+    //createStream actrion creator -> given to us as props through connect() which connects us to our redux store [the action creator is imported as we know]
+    //and it is dispatched as arg 2 of connect -> this action creator expects the form data to send to reducer to process, so, we pass it the formValues
+    // we get from using redux-form logic in this component [directly given from line 65 in handleSubmit redux-form m,ethod! cool]
+  };
 
   render () {
     return (
       <form
         //use the props from redux-form handleSubmit to handle submit and call it passing our custom onsubmit method
-        onSubmit={this.props.handleSubmit (this.onSubmit)}
+        onSubmit={this.props.handleSubmit (this.onSubmit)} //onSubmit is a reference to the method, its a callback, therefore as we know, all undefined props/errors we get usually mean we did not bind methods to this for callbacks so on submit should be bound (just use arrow functions here on out. its easier)
         className="ui form error"
       >
         {/**name prop is mandatory for form fields
@@ -94,10 +101,14 @@ const validate = formValues => {
   return errors; //must return errors from the validate
 };
 
-export default reduxForm ({
+//put the reduxcFrom into its own variable like this if using connect() else, see video 248 before this change to see other syntax of reduxfROM()() calling just like connect
+const formWrapped = reduxForm ({
   form: 'streamCreate', //key here has to be named form because it referenccces the key 'form' in combine reducers when setting up the redux-form for this app
   validate: validate, //as we know, if key/val are same name, we can negate the val, and the key will just know what to refrence [must match some data, fucntion etc. it references in the file though]
 }) (StreamCreate);
+
+//connect and reduxform functions are being used: new syntax of the export now!
+export default connect (null, {createStream}) (formWrapped);
 
 //tons of props are now existent in this component! similar to the mapStateToProps of course
 //however redux-form passes tons of props to the component for us
@@ -109,4 +120,17 @@ export default reduxForm ({
  * 
  * just like connect() which returns a function [dispatch() implicitely likewe are used to] and returns that function
  * to be called on the component we are calloing witht he second set of ()
+ * 
+ * notice we put reduxcform into a function expression (saved in a var) and also called the component as the second call liek we should be , and like we know from using connect()
+ * 
+ * becasue we need connect here to map state itself, we want to extraxt the reduxform into this function idea, called on component but then 
+ * export default connect like we know , passing action creators to dispatch, but we no longer call the component to get the props! we call the function
+ * in which deals with the reduxForm state and passes to the component: the formWrapped is like a wrapper function. it will perform its redux form state stuff
+ * pass all those properties as props to the component in the returned functiona dn then in order to also get app state, we use connect on the export 
+ * and pass like normal the action creators BUT call the returned inner function passed in the wrapper instead. see video 248 for explanation
+ * 
+ * 
+ * remember that reduxForm is a simple library for handling controlled components with forms and an easy way for redux to do all the controlling and we simply
+ * need to deal with validation, extracting the saved data and sending it to app level store for overall app level logic
+ * 
  */
