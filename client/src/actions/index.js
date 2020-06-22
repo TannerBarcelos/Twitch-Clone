@@ -12,7 +12,7 @@ import {
   EDIT_STREAM,
 } from './types';
 
-export const signIn = (id) => {
+export const signIn = id => {
   return {
     type: SIGN_IN,
     payload: id,
@@ -28,52 +28,55 @@ export const signOut = () => {
 
 //async so need thunk and explicit dispatch: send a post request to the db.json file passing it formValues (given in the actionCreator call in the createStream component)
 //notice though, we have no reducer for this. [notive the function after async has a new second argument getState this will return the current state in redux store if we want it [this applies for thunk or not]]
-export const createStream = (formValues) => async (dispatch, getState) => {
+export const createStream = formValues => async (dispatch, getState) => {
   //pulling userId from state [the current user ID for the post]
-  const {userId} = getState().auth;
+  const {userId} = getState ().auth;
   //gathers the form data entered on the page and the usersId who made this stream and returns that data to response so we can send it as a payload
-  const response = await streams.post('/streams', {...formValues, userId});
-  dispatch({
+  const response = await streams.post ('/streams', {...formValues, userId});
+  dispatch ({
     type: CREATE_STREAM,
     payload: response.data,
   });
 
   //do some programmatic navigation to get the user back to the root (/) route : will take us automatically THIS IS SO SICK [SEE HISTORY.JS IN ROOT AND ALSO VIDEO 257/258]
-  history.push('/');
+  history.push ('/');
 };
 
 //action creator to fetch all the streams
-export const fetchStreams = () => async (dispatch) => {
+export const fetchStreams = () => async dispatch => {
   //gets all the streams in the database and returns them as payload to the store as current state of streams going
-  const response = await streams.get('/streams');
-  dispatch({
+  const response = await streams.get ('/streams');
+  dispatch ({
     type: FETCH_STREAMS,
     payload: response.data,
   });
 };
 
 //takes in the stream id to fetch one stream
-export const fetchStream = (id) => async (dispatch) => {
-  const response = await streams.get(`/streams/${id}`);
-  dispatch({
+export const fetchStream = id => async dispatch => {
+  const response = await streams.get (`/streams/${id}`);
+  dispatch ({
     type: FETCH_STREAM,
     payload: response.data,
   });
 };
 
-//edits a stream by given id and the form values entered in a form used to update stream info
-export const editStream = (id, formValues) => async (dispatch) => {
-  const response = await streams.put(`/streams/${id}`, formValues);
-  dispatch({
+//edits a stream by given id and the form values entered in a form used to update stream info [patch will update ]
+export const editStream = (id, formValues) => async dispatch => {
+  const response = await streams.patch (`/streams/${id}`, formValues);
+  dispatch ({
     type: EDIT_STREAM,
     payload: response.data,
   });
+
+  //redirect to home with pragmattic routing
+  history.push ('/');
 };
 
 //gets stream to delete by id
-export const deleteStream = (id) => async (dispatch) => {
-  await streams.delete(`/streams/${id}`);
-  dispatch({
+export const deleteStream = id => async dispatch => {
+  await streams.delete (`/streams/${id}`);
+  dispatch ({
     type: DELETE_STREAM,
     payload: id,
   });

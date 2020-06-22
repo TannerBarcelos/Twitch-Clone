@@ -1,39 +1,10 @@
 {
   "streams": [
     {
-      "title": "idk",
-      "description": "hello",
-      "id": 4
-    },
-    {
-      "title": "this is a new stream",
-      "description": "hello hello",
+      "title": "NFL GameDay!",
+      "description": "Watch opening weekend with me",
       "userId": "107032892610604021111",
-      "id": 5
-    },
-    {
-      "title": "unexpected",
-      "description": "did not expect that",
-      "userId": "107032892610604021111",
-      "id": 6
-    },
-    {
-      "title": "testing the programmatic nav",
-      "description": "You should not see this on the form page",
-      "userId": "107032892610604021111",
-      "id": 7
-    },
-    {
-      "title": "ignore more",
-      "description": "id",
-      "userId": "107032892610604021111",
-      "id": 8
-    },
-    {
-      "title": "wewec",
-      "description": "wcwc",
-      "userId": "107032892610604021111",
-      "id": 9
+      "id": 1
     }
   ]
 }

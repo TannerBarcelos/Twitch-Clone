@@ -41,8 +41,8 @@ class StreamForm extends Component {
     );
   };
 
-  //handleSubmit will call this method and instead, pass this method the form inputs from the form and we can then
-  //do whatever we want! super cool
+  //handleSubmit is a redux-form method that takes in some onsubmit/event logic to invoke to automatically control the input, adn keep track of input state for us unlinke we are used to with parent passing down callbacks..
+  //onSubmit is a prop in this component that is a callback from the similar components create stream and edit stream (see react course )
   onSubmit = formValues => {
     this.props.onSubmit (formValues);
   };
@@ -91,7 +91,7 @@ const validate = formValues => {
   return errors; //must return errors from the validate
 };
 
-//put the reduxFrom into its own variable like this if using connect() else, see video 248 before this change to see other syntax of reduxfROM()() calling just like connect
+//export reduxForm and wrap the component in it (works like connect only passes us extra props from redux form to work with)
 export default reduxForm ({
   form: 'streamForm', //key here has to be named form because it referenccces the key 'form' in combine reducers when setting up the redux-form for this app
   validate: validate, //as we know, if key/val are same name, we can negate the val, and the key will just know what to refrence [must match some data, fucntion etc. it references in the file though]

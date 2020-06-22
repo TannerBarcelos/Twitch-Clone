@@ -12,6 +12,14 @@ class StreamCreate extends Component {
     return (
       <div>
         <h3>Create a Stream</h3>
+        {/**stream form component is mounted here such that edit stream and this component share all the same UI but only change the form
+        labels and button text, so, we make streamform a reusssbale component for the UI and only mount them in the parent components which represent the routes
+        to render in our router/component architecture
+        
+        we pass an onSubmit prop callback that will basically pass this callback down as props to the stream form, and then when
+        the button to create stream or edit stream in the other component is pressed (hence the action creators in each) it will do all the logic we wanted
+
+        */}
         <StreamForm onSubmit={this.onSubmit} />
       </div>
     );
