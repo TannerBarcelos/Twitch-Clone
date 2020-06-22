@@ -13,21 +13,22 @@ import {signIn, signOut} from '../actions/index';
 
 class GoogleAuth extends Component {
   //load the OATH system from google -> use did mount lifecycle method for requests that should happen immediately on load
-  componentDidMount () {
-    window.gapi.load ('client:auth2', () => {
+  componentDidMount() {
+    window.gapi.load('client:auth2', () => {
       //this is async: returns a promise -> this is where we will initiate the nww auth instance to sign the user in
       window.gapi.client
-        .init ({
-          clientId: '106342742873-ntgcr1aoiros0i86ddb7uk5cvn5t1fi2.apps.googleusercontent.com',
+        .init({
+          clientId:
+            '106342742873-ntgcr1aoiros0i86ddb7uk5cvn5t1fi2.apps.googleusercontent.com',
           scope: 'email', //the list of scopes [methods of authorization]
         })
-        .then (() => {
+        .then(() => {
           //create a new auth reference to use for the user auth
-          this.auth = window.gapi.auth2.getAuthInstance ();
+          this.auth = window.gapi.auth2.getAuthInstance();
           //update auth in our redux store
-          this.onAuthChange (this.auth.isSignedIn.get ());
+          this.onAuthChange(this.auth.isSignedIn.get());
           //listen for changes to sign in for later
-          this.auth.isSignedIn.listen (this.onAuthChange);
+          this.auth.isSignedIn.listen(this.onAuthChange);
         });
     });
     /*load up the oath library from googles API -> see video 217-218 in react course [docs: https://developers.google.com/identity/sign-in/web/reference#authentication]
@@ -36,20 +37,20 @@ class GoogleAuth extends Component {
   }
 
   //use the props mapped from state to sign in or out depending on the auth step
-  onAuthChange = isSignedIn => {
+  onAuthChange = (isSignedIn) => {
     if (isSignedIn) {
-      this.props.signIn (this.auth.currentUser.get ().getId ()); //get the authenticated users google id -> this is also a gapi method/logic [see docs]
+      this.props.signIn(this.auth.currentUser.get().getId()); //get the authenticated users google id -> this is also a gapi method/logic [see docs]
     } else {
-      this.props.signOut ();
+      this.props.signOut();
     }
   };
 
   onSignInClick = () => {
-    this.auth.signIn (); //action to sign in: pass to connect() which will magically send the action to the store and access any reducer that takes in an action type === to the action of signin type/payload we made
+    this.auth.signIn(); //action to sign in: pass to connect() which will magically send the action to the store and access any reducer that takes in an action type === to the action of signin type/payload we made
   };
 
   onSignOutClick = () => {
-    this.auth.signOut ();
+    this.auth.signOut();
   };
 
   //helper method to do conditional rendering of button for sign in/sign out pertaining to the gapi auth
@@ -75,16 +76,16 @@ class GoogleAuth extends Component {
     }
   };
 
-  render () {
-    return <div>{this.renderAuthButton ()}</div>;
+  render() {
+    return <div>{this.renderAuthButton()}</div>;
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isSignedIn: state.auth.isSignedIn, //auth is the key (alias) for the auth reducer in our combined reducers in index/reducers -> reducers make up a whole state!
   };
 };
 
 //use connect to hook in to store passing it all the action creators to dispatch to store: reducers will invoke logic, mapStateToProps() always does just that: maps state changed, etc. from our action creators and actions sent ot those reducers to affect app level state
-export default connect (mapStateToProps, {signIn, signOut}) (GoogleAuth);
+export default connect(mapStateToProps, {signIn, signOut})(GoogleAuth);

@@ -1,1 +1,5 @@
 db.json server as databse for this app but we could refactor to use mongoDB.
+we use this file to add streams too. its a basic server
+
+in npm scripts
+ "start": "json-server -p 3001 db.json"   <-- makes a server
