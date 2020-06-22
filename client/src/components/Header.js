@@ -2,7 +2,7 @@ import React from 'react';
 
 import GoogleAuth from './GoogleAuth';
 
-//import link to linkt he nav tab links to the different pages we want the links to point to
+//import link : always use Link component to create react style anchors
 import {Link} from 'react-router-dom';
 
 //this component represents the nav bar for our app (will mount above browser router in the app)

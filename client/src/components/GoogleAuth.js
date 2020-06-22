@@ -45,7 +45,7 @@ class GoogleAuth extends Component {
   };
 
   onSignInClick = () => {
-    this.auth.signIn ();
+    this.auth.signIn (); //action to sign in: pass to connect() which will magically send the action to the store and access any reducer that takes in an action type === to the action of signin type/payload we made
   };
 
   onSignOutClick = () => {

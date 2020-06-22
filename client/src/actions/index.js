@@ -12,13 +12,14 @@ import {
   EDIT_STREAM,
 } from './types';
 
-//notice no returned payload: these actions are simply used for booleans and signing in a user with auth
 export const signIn = id => {
   return {
     type: SIGN_IN,
     payload: id,
   };
 };
+
+//notice no returned payload: these actions are simply used for booleans and signing in a user with auth
 export const signOut = () => {
   return {
     type: SIGN_OUT,
@@ -26,9 +27,11 @@ export const signOut = () => {
 };
 
 //async so need thunk and explicit dispatch: send a post request to the db.json file passing it formValues (given in the actionCreator call in the createStream component)
-//notice though, we have no reducer for this.
-export const createStream = formValues => async dispatch => {
-  const response = await streams.post ('/streams', formValues);
+//notice though, we have no reducer for this. [notive the function after async has a new second argument getState this will return the current state in redux store if we want it [this applies for thunk or not]]
+export const createStream = formValues => async (dispatch, getState) => {
+  const {userId} = getState ().auth;
+  const response = await streams.post ('/streams', {...formValues, userId});
+  //post the data from the form and the usersID that posted it as an object
   //dispatch create stream as an action type and the axios response object from the post
   //remember async action creators need to dispatch explicitely instead of return
   dispatch ({
@@ -39,7 +42,9 @@ export const createStream = formValues => async dispatch => {
   //at the route of /streams [this type of stuff would be different with express kinda. see the ecommerce app]
 };
 
-//action creator to fetch all the streams
+//action creator to fetch all the streams: remmeber the action creator is imported to any component we want to use this action on, and then we can call it on some event
+//and then we can essentially dispatch these actions [dispatch here since its async] in the connect() function and then the component , as we kniw, has the cnnnect
+//middle man which connects us to our state such that we can change state anywhere in the app. refer to notes. this is fundamental !!
 export const fetchStreams = () => async dispatch => {
   const response = await streams.get ('/streams');
   dispatch ({

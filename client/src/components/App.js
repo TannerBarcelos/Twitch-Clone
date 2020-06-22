@@ -9,8 +9,6 @@ import StreamCreate from './streams/StreamCreate';
 import StreamShow from './streams/StreamShow';
 import StreamDelete from './streams/StreamDelete';
 import StreamEdit from './streams/StreamEdit';
-
-//Nav Header
 import Header from './Header';
 
 function App () {

@@ -55,13 +55,13 @@ class StreamCreate extends Component {
     this.props.createStream (formValues);
     //createStream actrion creator -> given to us as props through connect() which connects us to our redux store [the action creator is imported as we know]
     //and it is dispatched as arg 2 of connect -> this action creator expects the form data to send to reducer to process, so, we pass it the formValues
-    // we get from using redux-form logic in this component [directly given from line 65 in handleSubmit redux-form m,ethod! cool]
+    // we get from using redux-form logic in this component [directly given from line 65 in handleSubmit redux-form method! cool]
   };
 
   render () {
     return (
       <form
-        //use the props from redux-form handleSubmit to handle submit and call it passing our custom onsubmit method
+        //use the props from redux-form handleSubmit[handleSubmit is a methid in redux-form] to handle submit and call it passing our custom onsubmit method
         onSubmit={this.props.handleSubmit (this.onSubmit)} //onSubmit is a reference to the method, its a callback, therefore as we know, all undefined props/errors we get usually mean we did not bind methods to this for callbacks so on submit should be bound (just use arrow functions here on out. its easier)
         className="ui form error"
       >
@@ -72,6 +72,7 @@ class StreamCreate extends Component {
         */}
         <Field name="title" component={this.renderInput} label="Enter Title" />
         <Field
+          //field, again, must have a name prop and component prop which is passed a renderInput function that is magically sent meta data , input,  etc. objects that redux-form has
           name="description"
           component={this.renderInput}
           label="Enter Description"
@@ -101,7 +102,7 @@ const validate = formValues => {
   return errors; //must return errors from the validate
 };
 
-//put the reduxcFrom into its own variable like this if using connect() else, see video 248 before this change to see other syntax of reduxfROM()() calling just like connect
+//put the reduxFrom into its own variable like this if using connect() else, see video 248 before this change to see other syntax of reduxfROM()() calling just like connect
 const formWrapped = reduxForm ({
   form: 'streamCreate', //key here has to be named form because it referenccces the key 'form' in combine reducers when setting up the redux-form for this app
   validate: validate, //as we know, if key/val are same name, we can negate the val, and the key will just know what to refrence [must match some data, fucntion etc. it references in the file though]
