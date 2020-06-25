@@ -24,11 +24,16 @@ function App () {
           {/*Header should be wrapped as a child of browsaer router/router, so we can use Link component in nav, but it should still be
           mounted ABOVE our routes!*/}
           <Header />
+          {/**
+          we wrap routes in a switch because , switch will look at all these routes and ONLY show the corresponding route to the exact link we click and navigate to
+          It will NOT show multiple routes because if you notice, streamcreate and streamshow has the same route! basically. And so when we click the stream in the list
+          and link to the desired 'stream show' itll actially take us to stream new and stream show concurrently
+           */}
           <Switch>
             {/**will render StreamList main root page at / [Use Link component to get to that [also is the root component]] */}
             <Route path="/" exact component={StreamList} />
             <Route path="/streams/new" exact component={StreamCreate} />
-            <Route path="/streams/show" exact component={StreamShow} />
+            <Route path="/streams/:id" exact component={StreamShow} />
             <Route path="/streams/delete/:id" exact component={StreamDelete} />
             <Route path="/streams/edit/:id" exact component={StreamEdit} />
             {' '}

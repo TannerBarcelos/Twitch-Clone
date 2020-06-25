@@ -49,10 +49,13 @@ class StreamList extends Component {
           {/**render the edit/delete button or not depending on the userID in state versus the logged in user so the user can have admin access to the stream */}
           {this.renderAdmin (stream)}
           <i className="large middle aligned icon camera" />
-          <div className="content">
-            {stream.title}
-            <div className="description">{stream.description}</div>
-          </div>
+          {/**link to the next route rule we made in app.js that links to /streams/:id page which renders the streamshow page */}
+          <Link to={`/streams/${stream.id}`} className="header">
+            <div className="content">
+              {stream.title}
+              <div className="description">{stream.description}</div>
+            </div>
+          </Link>
         </div>
       );
     });

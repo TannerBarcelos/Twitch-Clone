@@ -1,3 +1,16 @@
 {
-  "streams": []
+  "streams": [
+    {
+      "title": "Ignore",
+      "description": "test",
+      "userId": "107032892610604021111",
+      "id": 1
+    },
+    {
+      "title": "ewwe",
+      "description": "This is a test description",
+      "userId": "107032892610604021111",
+      "id": 2
+    }
+  ]
 }
