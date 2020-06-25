@@ -1,7 +1,5 @@
 import streams from '../apis/streams'; //axios instance definer to make requests to backend [this type of design is used a lot..study it and get used to it]
-import history from '../history'; //for programattic navigation
-//technique: make string constants in a types.js file for the action types and use them as vars in our action creators to make life easier
-//and avoid bugs of typos in our action types
+import history from '../history'; //for programattic navigation -. will auto route user to a route after the action is done and dispatched
 import {
   SIGN_IN,
   SIGN_OUT,
@@ -80,6 +78,8 @@ export const deleteStream = id => async dispatch => {
     type: DELETE_STREAM,
     payload: id,
   });
+  //auto navigate them back to the root such that we avoid bugs on the delete button
+  history.push ('/');
 };
 
 /**

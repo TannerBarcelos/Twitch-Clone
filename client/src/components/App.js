@@ -18,17 +18,18 @@ function App () {
     //this is not navigation: thats in our header component
     (
       <div className="ui container">
-        {/**see optional video in react course and also video 257/258 [we are giving the router, not browser router anymore its own hisotry to meintain] */}
+        {/**see optional video in react course and also video 257/258 [we are giving the router, not browser router anymore its own hisotry to meintain] so we can auto 
+        navigate to different routes after actions are taken*/}
         <Router history={history}>
-          {/*Header should be wraspped as a child of browsaer router/router, so we can use Link component in nav, but it should still be
+          {/*Header should be wrapped as a child of browsaer router/router, so we can use Link component in nav, but it should still be
           mounted ABOVE our routes!*/}
           <Header />
           <Switch>
-            {/**the components are rendered by a route so props are passed magically about the route to each component (this is important for the aspect of getting a stream id, (if we put :id in a route, etc (See video 263))) */}
+            {/**will render StreamList main root page at / [Use Link component to get to that [also is the root component]] */}
             <Route path="/" exact component={StreamList} />
             <Route path="/streams/new" exact component={StreamCreate} />
             <Route path="/streams/show" exact component={StreamShow} />
-            <Route path="/streams/delete" exact component={StreamDelete} />
+            <Route path="/streams/delete/:id" exact component={StreamDelete} />
             <Route path="/streams/edit/:id" exact component={StreamEdit} />
             {' '}
             {/**will edit the desired string in the path for the selected stream to edit on the button even in stream list component where we map the streams */}
